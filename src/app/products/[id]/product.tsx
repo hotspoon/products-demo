@@ -10,6 +10,7 @@ import {
   CardTitle,
   CardDescription
 } from "@/components/ui/card" // Adjust the import path as necessary
+import Image from "next/image"
 
 export default function Product({
   product
@@ -29,10 +30,16 @@ export default function Product({
         <CardTitle>{product.title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <Carousel showThumbs={false} autoPlay infiniteLoop emulateTouch showStatus={false}>
+        <Carousel autoPlay infiniteLoop>
           {product.images.map((image, index) => (
             <div key={index}>
-              <img src={image} alt={`Product Image ${index + 1}`} className="rounded-lg" />
+              <Image
+                src={image}
+                alt={`Product Image ${index + 1}`}
+                width={400}
+                height={400}
+                className="rounded-lg"
+              />
             </div>
           ))}
         </Carousel>

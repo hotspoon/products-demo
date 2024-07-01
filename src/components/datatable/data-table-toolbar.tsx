@@ -6,6 +6,17 @@ import { Input } from "@/components/ui/input"
 import { DataTableViewOptions } from "./data-table-view-options"
 import { DataTableFacetedFilter } from "./data-table-faceted-filter"
 import { statuses } from "./data"
+import { Button } from "../ui/button"
+import { Cross2Icon } from "@radix-ui/react-icons"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select"
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
@@ -22,21 +33,34 @@ export function DataTableToolbar<TData>({ table, categories }: DataTableToolbarP
           onChange={(event) => table.setGlobalFilter(event.target.value)}
           className="h-8 w-[150px] lg:w-[250px]"
         />
-        {/* filter by category */}
-        {/* {table.getColumn("category") && (
-          <DataTableFacetedFilter
-            column={table.getColumn("category")}
-            title="Category"
-            options={categories}
-          />
-        )} */}
-        {/* {table.getColumn("status") && (
-          <DataTableFacetedFilter
-            column={table.getColumn("status")}
-            title="Status"
-            options={statuses}
-          />
-        )} */}
+        <Select
+          onValueChange={(value) => {
+            // Assuming the event.target.value holds the selected category's value
+            const selectedCategoryValue = value
+            // Check if there's a specific column to apply the filter on, e.g., "category"
+            const categoryColumn = table.getColumn("category")
+            if (categoryColumn) {
+              // Set the filter value for the column, or clear it if no category is selected
+              categoryColumn.setFilterValue(
+                selectedCategoryValue.length ? selectedCategoryValue : undefined
+              )
+            }
+          }}
+        >
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Select a category" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Category</SelectLabel>
+              {categories.map((category) => (
+                <SelectItem key={category.value} value={category.value}>
+                  {category.label}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
       </div>
       {/* <DataTableViewOptions table={table} /> */}
     </div>

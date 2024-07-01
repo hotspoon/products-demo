@@ -7,7 +7,7 @@ import ProductList from "./_components/ProductList"
 async function Page() {
   const products = await fetchProducts()
   const categories = await fetchProductCategories()
-  //   console.log(categories)
+
   return (
     <div className="container py-10">
       <h1 className="text-center text-4xl font-bold">Product Page</h1>

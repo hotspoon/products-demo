@@ -19,7 +19,6 @@ type ProductListProps = {
 }
 
 function ProductList({ products }: ProductListProps) {
-  console.log(products)
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([])
   const [filterCategory, setFilterCategory] = useState<string>("")
   const [sortOrder, setSortOrder] = useState<string>("asc")
